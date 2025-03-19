@@ -1,0 +1,142 @@
+Practical No:  - Join Queries, Subqueries
+*Table Creation*
+```
+CREATE TABLE customers (
+  customer_id INT PRIMARY KEY,
+  customer_name VARCHAR(255)
+);
+
+CREATE TABLE orders (
+  order_id INT PRIMARY KEY,
+  customer_id INT,
+  order_date DATE,
+  FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+);
+
+CREATE TABLE order_items (
+  order_item_id INT PRIMARY KEY,
+  order_id INT,
+  product_name VARCHAR(255),
+  quantity INT,
+  FOREIGN KEY (order_id) REFERENCES orders(order_id)
+);
+```
+
+*Table Insertion*
+```
+INSERT INTO customers (customer_id, customer_name)
+VALUES
+  (1, 'John Doe'),
+  (2, 'Jane Doe'),
+  (3, 'Bob Smith');
+
+INSERT INTO orders (order_id, customer_id, order_date)
+VALUES
+  (1, 1, '2020-01-01'),
+  (2, 1, '2020-01-15'),
+  (3, 2, '2020-02-01'),
+  (4, 3, '2020-03-01');
+
+INSERT INTO order_items (order_item_id, order_id, product_name, quantity)
+VALUES
+  (1, 1, 'Product A', 10),
+  (2, 1, 'Product B', 20),
+  (3, 2, 'Product C', 30),
+  (4, 3, 'Product D', 40),
+  (5, 4, 'Product E', 50);
+```
+
+*Join Queries*
+_Inner Join_
+```
+SELECT orders.order_id, customers.customer_name
+FROM orders
+INNER JOIN customers
+ON orders.customer_id = customers.customer_id;
+```
+
+_Left Join_
+```
+SELECT orders.order_id, customers.customer_name
+FROM orders
+LEFT JOIN customers
+ON orders.customer_id = customers.customer_id;
+```
+
+_Right Join_
+```
+SELECT orders.order_id, customers.customer_name
+FROM orders
+RIGHT JOIN customers
+ON orders.customer_id = customers.customer_id;
+```
+
+_Full Outer Join_
+```
+SELECT orders.order_id, customers.customer_name
+FROM orders
+FULL OUTER JOIN customers
+ON orders.customer_id = customers.customer_id;
+```
+
+*Subqueries*
+_Single-Row Subquery_
+```
+SELECT *
+FROM orders
+WHERE order_id = (
+  SELECT MAX(order_id)
+  FROM orders
+);
+```
+
+_Multiple-Row Subquery_
+```
+SELECT *
+FROM orders
+WHERE order_id IN (
+  SELECT order_id
+  FROM order_items
+  WHERE quantity > 10
+);
+```
+
+_Correlated Subquery_
+```
+SELECT *
+FROM orders o
+WHERE o.order_id = (
+  SELECT MAX(oi.order_id)
+  FROM order_items oi
+  WHERE oi.order_id = o.order_id
+);
+```
+
+Practical No:  - Views, Creating Views, Dropping Views, Selecting from a View
+*Creating a View*
+```
+CREATE VIEW customer_orders AS
+SELECT c.customer_name, o.order_id, o.order_date
+FROM customers c
+JOIN orders o ON c.customer_id = o.customer_id;
+```
+
+*Dropping a View*
+```
+DROP VIEW customer_orders;
+```
+
+*Selecting from a View*
+```
+SELECT *
+FROM customer_orders;
+```
+
+*Updating a View*
+```
+CREATE OR REPLACE VIEW customer_orders AS
+SELECT c.customer_name, o.order_id, o.order_date
+FROM customers c
+JOIN orders o ON c.customer_id = o.customer_id
+WHERE o.order_date > '2020-01-01';
+```
