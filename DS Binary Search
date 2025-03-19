@@ -1,0 +1,28 @@
+def binary_search(lst, target):
+    low = 0
+    high = len(lst) - 1
+
+    while low <= high:
+        mid = (low + high) // 2  # Find the middle index
+        mid_value = lst[mid]
+
+        if mid_value == target:  # If the target is found at the middle
+            return mid
+        elif mid_value < target:  # If the target is greater, search the right half
+            low = mid + 1
+        else:  # If the target is smaller, search the left half
+            high = mid - 1
+
+    return -1  # Return -1 if the target is not found
+
+# Example usage
+my_list = [10, 20, 30, 40, 50, 60]
+target_value = 40
+
+result = binary_search(my_list, target_value)
+
+if result != -1:
+    print(f"Item found at index {result}")
+else:
+    print("Item not found")
+
