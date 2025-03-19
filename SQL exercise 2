@@ -1,0 +1,50 @@
+CREATE TABLE EMPLY (
+    Empcode VARCHAR(10) PRIMARY KEY,
+    Empname VARCHAR(50),
+    Address VARCHAR(100),
+    Age INT,
+    Dept_Code VARCHAR(10)
+);
+
+CREATE TABLE DEPT (
+    DEPTCODE VARCHAR(10) PRIMARY KEY,
+    DEPTNAME VARCHAR(50)
+);
+
+INSERT INTO EMPLY VALUES 
+('E101', 'Anjaly', 'Anjaly Nivas, Thiruvalla', 25, 'D301'),
+('E102', 'Bobby', 'Alapuzha', 28, 'D305'),
+('E103', 'Aravind', 'Chennai', 31, 'D305'),
+('E104', 'Lakshmi', 'Mannar', 55, 'D707'),
+('E105', 'Daisy', 'Chaithram, Angamaly', 35, 'D707'),
+('E106', 'Esha', 'Mumbai', 23, 'D707'),
+('E107', 'Georgy', 'Pala', 45, 'D909'),
+('E108', 'Prakash', 'Vennikulam', 36, 'D110'),
+('E109', 'Madhavan', 'Mynakum, Kottayam', 46, 'D202'),
+('E110', 'Anugraha', 'Aparna, Angamaly', 47, 'D301');
+
+INSERT INTO DEPT VALUES 
+('D301', 'Sales'),
+('D302', 'Account'),
+('D707', 'Research'),
+('D909', 'Advertising'),
+('D202', 'Stock'),
+('D110', 'Computer'),
+('D305', 'Marketing');
+
+-- 1. Employees whose age is between 25 and 45
+SELECT * FROM EMPLY WHERE Age BETWEEN 25 AND 45;
+
+-- 2. Total number of employees in each department
+SELECT Dept_Code, COUNT(*) AS Total_Employees FROM EMPLY GROUP BY Dept_Code;
+
+-- 3. Employees in "Account" and "Stock" departments
+SELECT Empcode, Empname, Address, Dept_Code 
+FROM EMPLY 
+WHERE Dept_Code IN ('D302', 'D202');
+
+-- 4. Average, maximum, and minimum age
+SELECT AVG(Age) AS Avg_Age, MAX(Age) AS Max_Age, MIN(Age) AS Min_Age FROM EMPLY;
+
+-- 5. Delete employees in the "Research" department
+DELETE FROM EMPLY WHERE Dept_Code = 'D707';
