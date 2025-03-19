@@ -1,0 +1,95 @@
+Practical No: 1
+Aim: Creating Tables (With and Without Constraints), Inserting/Updating/Deleting Records in a Table, Altering a Table, Dropping/Truncating/Renaming Tables 
+
+Code:
+1.  CREATE: 
+   -  Purpose:  Creates a new database, table, index, or view.
+- Example:
+
+A. Creating Tables (With and Without Constraints)
+-- Create a table without constraints
+CREATE TABLE Students (
+    StudentID INT,
+    FirstName NVARCHAR(50),
+    LastName NVARCHAR(50),
+    Age INT,
+    Grade NVARCHAR(2)
+);
+
+-- Create a table with constraints
+CREATE TABLE Students (
+    StudentID INT PRIMARY KEY,
+    FirstName NVARCHAR(50) NOT NULL,
+    LastName NVARCHAR(50),
+    Age INT CHECK (Age >= 5 AND Age <= 18),
+    Grade NVARCHAR(2) DEFAULT 'NA'
+);
+
+CREATE TABLE Courses (
+    CourseID INT PRIMARY KEY,
+    CourseName VARCHAR(50) NOT NULL,
+    Credits INT CHECK (Credits > 0)
+);
+
+2.  INSERT: 
+   -  Purpose:  Adds new records to a table.
+- Example:
+-- Insert records 
+INSERT INTO Students (StudentID, FirstName, LastName, Age, Grade)
+VALUES (1, 'John', 'Doe', 15, 'A');
+
+3.  UPDATE: 
+   -  Purpose:  Modifies existing records in a table.
+   - Example:
+
+-- Update a record 
+UPDATE Students
+SET Grade = 'B'
+WHERE StudentID = 1;
+
+4.  DELETE: 
+   -  Purpose:  Removes records from a table.
+   -  Example: 
+
+ DELETE FROM Students
+WHERE Age < 10;
+5.  ALTER: 
+   -  Purpose:  Modifies the structure of an existing database, table, or index.
+   -  Example: 
+     
+-- Add a new column
+ALTER TABLE Students
+ADD Address NVARCHAR(100);
+
+-- Modify an existing column
+ALTER TABLE Students
+ALTER COLUMN Age INT NOT NULL;
+
+-- Drop a column
+ALTER TABLE Students
+DROP COLUMN Address;
+
+6.  TRUNCATE: 
+   -  Purpose:  Removes all records from a table, but retains the structure for future use.
+   -  Example: 
+   
+-- Truncate a table (removes all data but keeps structure)
+TRUNCATE TABLE Courses;
+
+7.  DROP: 
+   -  Purpose:  Deletes a database, table, index, or view.
+   -  Example: 
+   
+
+-- Drop a table
+DROP TABLE Courses;
+
+
+8.  RENAME: 
+   -  Purpose:  Renames a table.
+   -  Example: 
+
+   -- Rename a table
+RENAME TABLE Students TO Learners;
+OR
+EXEC sp_rename 'Students', 'Learners';
