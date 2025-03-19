@@ -1,0 +1,109 @@
+Creating Sets
+# Creating a set
+set1 = {1, 2, 3, 4, 5}
+set2 = {4, 5, 6, 7, 8}
+
+print("Set1:", set1)
+print("Set2:", set2)
+
+2. Basic Operations on Sets
+Adding Elements
+set1.add(6) 			 # Adds 6 to set1
+print("Set1 after adding 6:", set1)
+
+Removing Elements
+set1.remove(6)  		# Removes 6 from set1
+print("Set1 after removing 6:", set1)
+
+# Use discard to remove an element, but it won't throw an error if the element doesn't exist
+set1.discard(10) 		 # Will not raise an error since 10 is not in set1
+
+Set Length
+print("Length of Set1:", len(set1))
+3. Set Operations
+Union (| or union())
+The union of two sets combines all the elements from both sets, removing duplicates.
+union_set = set1 | set2 			 # Using the `|` operator
+# or
+union_set = set1.union(set2)			  # Using the `union()` method
+print("Union of Set1 and Set2:", union_set)
+
+Intersection (& or intersection())
+The intersection of two sets contains only the elements that are present in both sets.
+intersection_set = set1 & set2  	# Using the `&` operator
+# or
+intersection_set = set1.intersection(set2) 		 # Using the `intersection()` method
+print("Intersection of Set1 and Set2:", intersection_set)
+
+Difference (- or difference())
+The difference of two sets contains elements that are in the first set but not in the second.
+difference_set = set1 - set2  				# Using the `-` operator
+# or
+difference_set = set1.difference(set2)  		# Using the `difference()` method
+print("Difference of Set1 and Set2:", difference_set)
+
+Symmetric Difference (^ or symmetric_difference())
+The symmetric difference contains elements that are in either of the sets but not in both.
+symmetric_difference_set = set1 ^ set2  # Using the `^` operator
+# or
+symmetric_difference_set = set1.symmetric_difference(set2)  # Using the `symmetric_difference()` method
+print("Symmetric Difference of Set1 and Set2:", symmetric_difference_set)
+
+4. Subset and Superset
+A subset is a set where all of its elements are also in another set.
+A superset is a set that contains all elements of another set.
+# Checking if one set is a subset of another
+print("Set1 is a subset of Set2:", set1.issubset(set2))
+
+# Checking if one set is a superset of another
+print("Set1 is a superset of Set2:", set1.issuperset(set2))
+
+5. Set Iteration
+You can iterate over the elements of a set using a for loop:
+for element in set1:
+    print(element)
+
+6. Set Comprehension
+Just like list comprehensions, you can also create sets using a set comprehension.
+# Create a set of squares of numbers from 1 to 5
+squares_set = {x**2 for x in range(1, 6)}
+print("Set of squares:", squares_set)
+
+Complete Example:
+set1 = {1, 2, 3, 4, 5}
+set2 = {4, 5, 6, 7, 8}
+
+# Adding an element
+set1.add(6)
+
+# Removing an element
+set1.remove(6)
+
+# Union
+union_set = set1 | set2
+print("Union:", union_set)
+
+# Intersection
+intersection_set = set1 & set2
+print("Intersection:", intersection_set)
+
+# Difference
+difference_set = set1 - set2
+print("Difference:", difference_set)
+
+# Symmetric Difference
+symmetric_difference_set = set1 ^ set2
+print("Symmetric Difference:", symmetric_difference_set)
+
+# Subset and Superset
+print("Set1 is a subset of Set2:", set1.issubset(set2))
+print("Set1 is a superset of Set2:", set1.issuperset(set2))
+
+# Set Comprehension
+squares_set = {x**2 for x in range(1, 6)}
+print("Set of squares:", squares_set)
+
+# Iterating over set
+print("Iterating over Set1:")
+for element in set1:
+    print(element)
