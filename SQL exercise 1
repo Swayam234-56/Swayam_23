@@ -1,0 +1,57 @@
+CREATE TABLE CLIENT_MASTER (
+    Client_No VARCHAR(10) PRIMARY KEY,
+    Name VARCHAR(50),
+    City VARCHAR(50),
+    Pincode INT,
+    Bal_due INT
+);
+
+CREATE TABLE SALE_ORDER (
+    Order_No VARCHAR(10) PRIMARY KEY,
+    Order_Date DATE,
+    Client_No VARCHAR(10),
+    Salesman_No VARCHAR(10),
+    Dely_Date DATE,
+    Order_Status VARCHAR(20),
+    FOREIGN KEY (Client_No) REFERENCES CLIENT_MASTER(Client_No)
+);
+
+INSERT INTO CLIENT_MASTER VALUES 
+('C00001', 'SMITHA JAIN', 'Mumbai', 400054, 15000),
+('C00002', 'VANDANA RAO', 'Chennai', 780001, 0),
+('C00003', 'PREM PUJARI', 'Mumbai', 400057, 5000),
+('C00004', 'BASU NATH', 'Mumbai', 400056, 0),
+('C00005', 'RAVI SHANKAR', 'Delhi', 100001, 2000),
+('C00006', 'ROOPA', 'Mumbai', 400050, 0);
+
+INSERT INTO SALE_ORDER VALUES 
+('O19001', '2013-01-12', 'C00001', 'S00001', '2013-01-20', 'In process'),
+('O19002', '2013-01-25', 'C00002', 'S00002', '2013-01-27', 'Cancelled'),
+('O46865', '2013-02-18', 'C00003', 'S00003', '2013-02-20', 'Fulfilled'),
+('O19003', '2013-04-03', 'C00001', 'S00001', '2013-04-07', 'Fulfilled'),
+('O46866', '2013-05-20', 'C00004', 'S00002', '2013-04-07', 'Cancelled'),
+('O19008', '2013-05-24', 'C00005', 'S00004', '2013-05-26', 'In process');
+
+-- 1. Clients whose Bal_due = 0
+SELECT * FROM CLIENT_MASTER WHERE Bal_due = 0;
+
+-- 2. Change city of Client_no C00004 to Jaipur
+UPDATE CLIENT_MASTER SET City = 'Jaipur' WHERE Client_No = 'C00004';
+
+-- 3. Clients residing in Mumbai
+SELECT * FROM CLIENT_MASTER WHERE City = 'Mumbai';
+
+-- 4. Name and address of customers who placed orders O19003 and O19002
+SELECT C.Name, C.City 
+FROM CLIENT_MASTER C 
+JOIN SALE_ORDER S ON C.Client_No = S.Client_No 
+WHERE S.Order_No IN ('O19003', 'O19002');
+
+-- 5. English-like sentence
+SELECT CONCAT(Name, ' lives in the city of ', City) AS Client_Info FROM CLIENT_MASTER;
+
+-- 6. Clients with Order_Status = "In process"
+SELECT C.Client_No, C.Name, C.City, C.Pincode 
+FROM CLIENT_MASTER C 
+JOIN SALE_ORDER S ON C.Client_No = S.Client_No 
+WHERE S.Order_Status = 'In process';
