@@ -1,0 +1,71 @@
+-- Table 1: EMPLY
+CREATE TABLE EMPLY (
+    Empcode VARCHAR(10) PRIMARY KEY,
+    Empname VARCHAR(50),
+    Address VARCHAR(100),
+    Age INT,
+    Dept_Code VARCHAR(10)
+);
+
+INSERT INTO EMPLY VALUES 
+('E101', 'Anjaly', 'Anjaly Nivas, Thiruvalla', 25, 'D301'),
+('E102', 'Bobby', 'Alapuzha', 28, 'D305'),
+('E103', 'Aravind', 'Chennai', 31, 'D305'),
+('E104', 'Lakshmi', 'Mannar', 55, 'D707'),
+('E105', 'Daisy', 'Chaithram, Angamaly', 35, 'D707'),
+('E106', 'Esha', 'Mumbai', 23, 'D707'),
+('E107', 'Georgy', 'Pala', 45, 'D909'),
+('E108', 'Prakash', 'Vennikulam', 36, 'D110'),
+('E109', 'Madhavan', 'Mynakum, Kottayam', 46, 'D202'),
+('E110', 'Anugraha', 'Aparna, Angamaly', 47, 'D301'),
+('E111', 'Deva', 'Trichy', 38, 'D301'),
+('E112', 'Saju', 'Dhanya, Ernakulam', 27, 'D202'),
+('E113', 'Priyesh', 'Priya Nivas, Kottayam', 26, 'D302');
+
+-- Table 2: PAYSLIP
+CREATE TABLE PAYSLIP (
+    Empcode VARCHAR(10),
+    Basic INT,
+    HRA INT,
+    DA INT,
+    FOREIGN KEY (Empcode) REFERENCES EMPLY(Empcode)
+);
+
+INSERT INTO PAYSLIP VALUES 
+('E101', 4000, 1900, 1500),
+('E102', 4500, 2200, 2000),
+('E103', 5000, 2800, 2200),
+('E104', 7000, 3000, 2700),
+('E105', 3000, 1500, 1200),
+('E106', 5700, 3000, 2900),
+('E107', 6200, 3300, 3000),
+('E108', 5700, 3700, 3000),
+('E109', 7500, 4660, 545),
+('E110', 5000, 300, 100),
+('E111', 6000, 200, 120);
+
+-- 1. Update age for employee E107
+UPDATE EMPLY SET Age = Age + 15 WHERE Empcode = 'E107';
+
+-- 2. Create a view for employees aged 35-45
+CREATE VIEW Emp_Age_View AS 
+SELECT * FROM EMPLY WHERE Age BETWEEN 35 AND 45;
+
+-- 3. Retrieve empcode, empname, address, and Netpay (Basic + HRA + DA) sorted by empcode
+SELECT E.Empcode, E.Empname, E.Address, (P.Basic + P.HRA + P.DA) AS NetPay 
+FROM EMPLY E 
+JOIN PAYSLIP P ON E.Empcode = P.Empcode 
+ORDER BY E.Empcode;
+
+-- 4. English-like sentence for salary details
+SELECT CONCAT('Employees with empcode ', Empcode, ' draws a basic salary ', Basic) AS SalaryDetails 
+FROM PAYSLIP;
+
+-- 5. List employees drawing basic salary between 5000 and 7000
+SELECT E.Empname, E.Address FROM EMPLY E 
+JOIN PAYSLIP P ON E.Empcode = P.Empcode 
+WHERE P.Basic BETWEEN 5000 AND 7000;
+
+-- 6. Add new column Total_Sal and update values
+ALTER TABLE PAYSLIP ADD COLUMN Total_Sal INT;
+UPDATE PAYSLIP SET Total_Sal = Basic + HRA + DA WHERE Empcode > 'E107';
